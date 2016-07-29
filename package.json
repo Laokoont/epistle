@@ -1,0 +1,25 @@
+{
+  "name": "epistle",
+  "version": "0.0.1",
+  "description": "An experimental static site generator with webcomponents enrichments for pastaand folklore writers",
+  "main": "index.js",
+  "scripts": {
+    "test": "epistle test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Laokoont/epistle.git"
+  },
+  "keywords": [
+    "static",
+    "site",
+    "generator",
+    "webcomponents"
+  ],
+  "author": "Oobluzhok Nachasic",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Laokoont/epistle/issues"
+  },
+  "homepage": "https://github.com/Laokoont/epistle#readme"
+}
