@@ -36,7 +36,9 @@
     "browser-sync": "^2.13.0",
     "gulp-eslint": "^3.0.1",
     "gulp-file": "^0.3.0",
+    "gulp-replace": "^0.5.4",
     "prompt": "^1.0.0",
-    "pug": "^2.0.0-beta4"
+    "pug": "^2.0.0-beta4",
+    "translitit-cyrillic-russian-to-latin": "^0.1.1"
   }
 }

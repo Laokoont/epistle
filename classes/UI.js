@@ -3,17 +3,17 @@
  */
 var prompt = require("prompt");
 
-var UI = ( function () {
-
+var CLI = ( function () {
+    // UI is asking user to enter some data
     this.askFor = {
 
+        // asking for meta information on new story
         storyMeta: () => new Promise(function (resolve, reject) {
             var schema = {
                     properties: {
                         title: {
                             description: "  * Enter a title for your story",
-                            required: true,
-                            default: "Just another story"
+                            required: true
                         },
                         author: {
                             description: "  * Enter the ID of your author",
@@ -50,18 +50,20 @@ var UI = ( function () {
 
                 };
 
-            console.log("Creating new story...");
             prompt.start();
+            console.log("Creating new story...");
             prompt.get(schema, (err, result) => {
                 if (err) {
+                    prompt.stop();
                     reject(err);
                 }
+                prompt.stop();
                 resolve(result);
             })
         })
-    }
+    };
 
     return this;
 }() );
 
-module.exports = UI;
+module.exports = CLI;
