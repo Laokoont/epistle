@@ -1,0 +1,27 @@
+{
+  "name": "epistle",
+  "description": "An experimental static site generator with webcomponents enrichments for pasta and folklore writers",
+  "main": "index.js",
+  "authors": [
+    "Oobluzhok Nachasic"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "static",
+    "site",
+    "generator",
+    "webcomponents"
+  ],
+  "homepage": "https://github.com/Laokoont/epistle",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "^1.6.0"
+  }
+}
