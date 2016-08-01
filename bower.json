@@ -1,23 +1,18 @@
 {
   "name": "epistle",
-  "version": "0.0.1",
-  "homepage": "https://github.com/Laokoont/epistle",
+  "description": "An experimental static site generator with webcomponents enrichments for pasta and folklore writers",
+  "main": "index.js",
   "authors": [
-    "Oobluzhok Nachasic <nachasic@gmail.com>"
+    "Oobluzhok Nachasic"
   ],
-  "description": "An experimental static site geneerator with webcomponent enrichments for pasta and folklore writers",
-  "main": "",
-  "moduleType": [
-    "es6",
-    "node"
-  ],
+  "license": "MIT",
   "keywords": [
     "static",
     "site",
-    "webcomponents",
-    "generator"
+    "generator",
+    "webcomponents"
   ],
-  "license": "MIT",
+  "homepage": "https://github.com/Laokoont/epistle",
   "private": true,
   "ignore": [
     "**/.*",
@@ -27,10 +22,6 @@
     "tests"
   ],
   "dependencies": {
-    "polymer": "~1.6.0",
-    "webcomponentsjs": "~0.7.22",
-    "iron-component-page": "~1.1.7",
-    "iron-demo-helpers": "~1.2.3",
-    "web-component-tester": "~4.3.1"
+    "polymer": "^1.6.0"
   }
 }

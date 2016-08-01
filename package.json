@@ -1,7 +1,7 @@
 {
   "name": "epistle",
   "version": "0.0.1",
-  "description": "An experimental static site generator with webcomponents enrichments for pasta and folklore writers",
+  "description": "An experimental static site generator with webcomponents enrichments for pastaand folklore writers",
   "main": "index.js",
   "scripts": {
     "test": "epistle test"
@@ -23,12 +23,20 @@
   },
   "homepage": "https://github.com/Laokoont/epistle#readme",
   "devDependencies": {
-    "eslint": "^3.1.1",
+    "eslint": "^3.2.0",
     "gulp": "^3.9.1",
-    "gulp-sass": "^2.3.2"
+    "gulp-markdown-it": "^0.1.1",
+    "gulp-pug": "^3.0.3",
+    "gulp-sass": "^2.3.2",
+    "json2yaml": "^1.1.0",
+    "web-component-tester": "^4.3.1"
   },
   "dependencies": {
     "bower": "^1.7.9",
-    "markdown-it": "^7.0.0"
+    "browser-sync": "^2.13.0",
+    "gulp-eslint": "^3.0.1",
+    "gulp-file": "^0.3.0",
+    "prompt": "^1.0.0",
+    "pug": "^2.0.0-beta4"
   }
 }
