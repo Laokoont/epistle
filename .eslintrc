@@ -1,7 +1,8 @@
 {
   "extends": "eslint:all",
   "env": {
-    "browser": true
+    "node": true,
+    "es6": true
   },
   "rules": {
     "no-bitwise": ["error", { "allow": ["~"] }],
@@ -36,6 +37,10 @@
     "func-names": 0,
     "global-require": 0,
     "require-jsdoc": 0,
-    "valid-jsdoc": 0
+    "valid-jsdoc": 0,
+    "space-in-parens": 0,
+    "one-var": 0,
+    "no-confusing-arrow": 0,
+    "no-console": 0
   }
 }

@@ -1,110 +1,114 @@
 /**
  * Created by nachasic on 30.07.16.
  */
+/* eslint object-curly-newline: ["error", { "minProperties": 1 }] */
+"use strict";
+
 var prompt = require("prompt");
 
 var CLI = ( function () {
+    var result = {};
+
     // UI is asking user to enter some data
-    this.askFor = {
+    result.askFor = {
 
         postMeta: () => new Promise(function (resolve, reject) {
             var schema = {
                 properties: {
                     title: {
                         description: "  * Enter a title to your blogpost",
-                        required: true,
+                        required: true
                     },
                     category: {
                         description: "  Enter the category",
                         required: false,
-                        default: "flame"
+                        "default": "flame"
                     },
                     tags: {
                         description: "  Enter tags separated by comma",
                         required: false,
-                        default: "",
+                        "default": "",
 
-                        before: (value) => ( value === "" ) ? [] : value.replace(/,\s/g, ",").split(",")
+                        before: (value) => value === "" ? [] : value.replace(/,\s/g, ",").split(",")
                     },
                     date: {
                         description: "   You can set the date for the blog post",
                         required: false,
-                        default: ( new Date() ).toString(),
+                        "default": ( new Date() ).toString(),
 
-                        before: value => ( new Date(value) ).toString()
+                        before: (value) => ( new Date(value) ).toString()
                     }
                 }
             };
 
             prompt.start();
             console.log("Creating new blogpost");
-            prompt.get(schema, (err, result) => {
+            prompt.get(schema, (err, res) => {
                 if (err) {
                     prompt.stop();
                     reject(err);
                 }
                 prompt.stop();
-                resolve(result);
-            })
+                resolve(res);
+            });
         }),
 
         // asking for meta information on new story
         storyMeta: () => new Promise(function (resolve, reject) {
             var schema = {
-                    properties: {
-                        title: {
-                            description: "  * Enter a title for your story",
-                            required: true
-                        },
-                        author: {
-                            description: "  * Enter the ID of your author",
-                            required: true,
-                            default: "Anonymus"
-                        },
-                        category: {
-                            description: "  Enter a category for your story",
-                            required: false,
-                            default: "netlore"
-                        },
-                        pug: {
-                            description: "  Do you want to enable PUG? (y/n)",
-                            required: false,
-                            default: "n",
+                properties: {
+                    title: {
+                        description: "  * Enter a title for your story",
+                        required: true
+                    },
+                    author: {
+                        description: "  * Enter the ID of your author",
+                        required: true,
+                        "default": "Anonymus"
+                    },
+                    category: {
+                        description: "  Enter a category for your story",
+                        required: false,
+                        "default": "netlore"
+                    },
+                    pug: {
+                        description: "  Do you want to enable PUG? (y/n)",
+                        required: false,
+                        "default": "n",
 
-                            before: value => ( value === "y" || value === "Y" || /yes/i.test(value) )
-                        },
-                        tags: {
-                            description: "  Enter tags separated by comma",
-                            required: false,
-                            default: "",
+                        before: (value) => value === "y" || value === "Y" || (/yes/i).test(value)
+                    },
+                    tags: {
+                        description: "  Enter tags separated by comma",
+                        required: false,
+                        "default": "",
 
-                            before: value => ( value === "" ? [] : value.replace(/,\s/gi, ",").split(",") )
-                        },
-                        date: {
-                            description: "   You can set the date for the story",
-                            required: false,
-                            default: ( new Date() ).toString(),
+                        before: (value) => value === "" ? [] : value.replace(/,\s/gi, ",").split(",")
+                    },
+                    date: {
+                        description: "   You can set the date for the story",
+                        required: false,
+                        "default": ( new Date() ).toString(),
 
-                            before: value => ( new Date(value) ).toString()
-                        }
+                        before: (value) => ( new Date(value) ).toString()
                     }
-
-                };
+                }
+            };
 
             prompt.start();
             console.log("Creating new story...");
-            prompt.get(schema, (err, result) => {
+            prompt.get(schema, (err, res) => {
                 if (err) {
                     prompt.stop();
                     reject(err);
                 }
                 prompt.stop();
-                resolve(result);
-            })
+                resolve(res);
+            });
         })
     };
 
-    return this;
+    return result;
 }() );
 
 module.exports = CLI;

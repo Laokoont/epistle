@@ -27,6 +27,7 @@
     "gulp": "^3.9.1",
     "gulp-markdown-it": "^0.1.1",
     "gulp-pug": "^3.0.3",
+    "gulp-rename": "^1.2.2",
     "gulp-sass": "^2.3.2",
     "json2yaml": "^1.1.0",
     "web-component-tester": "^4.3.1"
