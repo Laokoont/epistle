@@ -7,6 +7,47 @@ var CLI = ( function () {
     // UI is asking user to enter some data
     this.askFor = {
 
+        postMeta: () => new Promise(function (resolve, reject) {
+            var schema = {
+                properties: {
+                    title: {
+                        description: "  * Enter a title to your blogpost",
+                        required: true,
+                    },
+                    category: {
+                        description: "  Enter the category",
+                        required: false,
+                        default: "flame"
+                    },
+                    tags: {
+                        description: "  Enter tags separated by comma",
+                        required: false,
+                        default: "",
+
+                        before: (value) => ( value === "" ) ? [] : value.replace(/,\s/g, ",").split(",")
+                    },
+                    date: {
+                        description: "   You can set the date for the blog post",
+                        required: false,
+                        default: ( new Date() ).toString(),
+
+                        before: value => ( new Date(value) ).toString()
+                    }
+                }
+            };
+
+            prompt.start();
+            console.log("Creating new blogpost");
+            prompt.get(schema, (err, result) => {
+                if (err) {
+                    prompt.stop();
+                    reject(err);
+                }
+                prompt.stop();
+                resolve(result);
+            })
+        }),
+
         // asking for meta information on new story
         storyMeta: () => new Promise(function (resolve, reject) {
             var schema = {
