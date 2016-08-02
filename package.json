@@ -40,6 +40,7 @@
     "gulp-replace": "^0.5.4",
     "prompt": "^1.0.0",
     "pug": "^2.0.0-beta4",
+    "require-dir": "^0.3.0",
     "translitit-cyrillic-russian-to-latin": "^0.1.1"
   }
 }

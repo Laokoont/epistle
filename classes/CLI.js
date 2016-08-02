@@ -1,6 +1,10 @@
 /**
+ * The class provides all the functionality necessary to
+ * interact with user via console and get the data from user
+ * input for various tasks
  * Created by nachasic on 30.07.16.
  */
+
 /* eslint object-curly-newline: ["error", { "minProperties": 1 }] */
 "use strict";
 
