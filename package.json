@@ -35,6 +35,7 @@
   "dependencies": {
     "bower": "^1.7.9",
     "browser-sync": "^2.13.0",
+    "event-stream": "^3.3.4",
     "gulp-data": "^1.2.1",
     "gulp-eslint": "^3.0.1",
     "gulp-file": "^0.3.0",
