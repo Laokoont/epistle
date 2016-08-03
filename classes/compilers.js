@@ -1,5 +1,5 @@
 /**
- * Created by alojkin on 03.08.2016.
+ * Created by nachasic on 03.08.2016.
  */
 /* eslint object-curly-newline: ["error", { "minProperties": 1 }] */
 
@@ -23,6 +23,7 @@ var compilers = ( function () {
                 post: (stub) => `src/blog/${stub}/static/**/*`
             },
             templates: {
+                storiesArchive: "templates/stories.pug",
                 story: "templates/story.pug",
                 storyPug: (stub) => `src/stories/${stub}/story.pug`
             },
@@ -50,11 +51,25 @@ var compilers = ( function () {
                 .pipe(grename( (path) => {
                     console.log(path.basename);
                 } ))
-                .pipe(gulp.dest(paths.dist.story(stub)));
+                .pipe(gulp.dest(paths.dist.story(stub))),
 
-    compObj.storyTasks = (stub, story) => [
+        generateStoriesArchive = (collection) =>
+            gulp.src(paths.templates.storiesArchive)
+                .pipe(pug({
+                    locals: {
+                        stories: collection
+                    }
+                }))
+                .pipe(gulp.dest("dist"));
+
+    compObj.singleStoryTasks = (stub, story) => [
+        // TODO: implement styles rendering for PUG-enabled sory
         compileStoryTask(stub, story),
         copyStaticFilesTask(paths.statics.story(stub), stub)
+    ];
+
+    compObj.storiesTasks = (collection) => [
+        generateStoriesArchive(collection)
     ];
 
     return compObj;

@@ -52,7 +52,7 @@ gulp.task("reg-posts", function () {
         }));
 });
 
-gulp.task("conv-stories", ["reg-stories"], function () {
+gulp.task("prep-stories", ["reg-stories"], function () {
     var currentStoryStub = "";
 
     md = md();
@@ -66,15 +66,14 @@ gulp.task("conv-stories", ["reg-stories"], function () {
         } ));
 });
 
-gulp.task("render: stories", ["conv-stories"], function () {
+// TODO: implement task for rendering sass
+gulp.task("render: stories", ["prep-stories"], function () {
     var tasks = [];
 
-    for (const arr of entries(collections.stories)) {
-        const stub = arr[0],
-            story = arr[1];
-
-        tasks.concat(compilers.storyTasks(stub, story));
+    for (const [stub, story] of entries(collections.stories)) {
+        tasks.concat(compilers.singleStoryTasks(stub, story));
     }
+    tasks.concat(compilers.storiesTasks(collections.stories));
 
     return es.merge(tasks);
 });

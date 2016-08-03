@@ -2,6 +2,8 @@
  * Tasks for generating story, posts and other source
  * files, boilerplates, polymer elements
  * and other stuff like that.
+ * Simply put, it's my own little yeoman :)
+ *
  * Created by nachasic on 02.08.2016.
  */
 "use strict";

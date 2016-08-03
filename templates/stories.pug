@@ -1,0 +1,9 @@
+extends layouts/common
+
+block title
+    title Все истории
+
+block content
+    each story, stub in stories
+        - var url = "stories/" + stub + "/index.html"
+        a.storylink(href=url title=story.title)= story.title
