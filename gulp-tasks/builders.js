@@ -15,7 +15,7 @@ var paths = {
         stories: "src/stories/",
         posts: "src/blog/",
         author: "src/authors/",
-        templates: { story: "templates/story.jade" },
+        templates: { story: "templates/story.pug" },
         dist: { story: (name) => `dist/stories/${name}/` }
     },
     collections = {
@@ -73,7 +73,7 @@ gulp.task("render: stories", ["conv-stories"], function () {
         const stub = arr[0],
             story = arr[1];
 
-        compilers.pushStoryTasks(tasks, stub, story);
+        tasks.concat(compilers.storyTasks(stub, story));
     }
 
     return es.merge(tasks);

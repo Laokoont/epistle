@@ -12,29 +12,50 @@ var gulp = require("gulp"),
 var compilers = ( function () {
     var compObj = {},
         paths = {
+            statics: {
+                story: (stub) => [
+                    `src/stories/${stub}/**/*`,
+                    `!src/stories/${stub}/styles/*`,
+                    `!src/stories/${stub}/*.md`,
+                    `!src/stories/${stub}/*.pug`,
+                    `!src/stories/${stub}/*.yml`
+                ],
+                post: (stub) => `src/blog/${stub}/static/**/*`
+            },
             templates: {
-                story: "templates/story.jade"
+                story: "templates/story.pug",
+                storyPug: (stub) => `src/stories/${stub}/story.pug`
             },
             dist: {
                 story: (name) => `dist/stories/${name}/`
             }
         },
 
-        compileStoryPugTask = (stub, story) =>
-            gulp.src(paths.templates.story)
+        compileStoryTask = (stub, story) => {
+            var source = story.pug ? paths.templates.storyPug(stub) : paths.templates.story;
+
+            return gulp.src(source)
                 .pipe(pug({
                     locals: story
                 }))
                 .pipe(grename( (path) => {
+                    console.log(stub);
                     path.basename = "index";
                 } ))
                 .pipe(gulp.dest(paths.dist.story(stub)));
+        },
 
-    compObj.pushStoryTasks = (streams, stub, story) => {
-        streams.push(
-            compileStoryPugTask(stub, story)
-        );
-    };
+        copyStaticFilesTask = (dir, stub) =>
+            gulp.src(dir)
+                .pipe(grename( (path) => {
+                    console.log(path.basename);
+                } ))
+                .pipe(gulp.dest(paths.dist.story(stub)));
+
+    compObj.storyTasks = (stub, story) => [
+        compileStoryTask(stub, story),
+        copyStaticFilesTask(paths.statics.story(stub), stub)
+    ];
 
     return compObj;
 }() );
