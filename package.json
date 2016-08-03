@@ -35,9 +35,13 @@
   "dependencies": {
     "bower": "^1.7.9",
     "browser-sync": "^2.13.0",
+    "gulp-data": "^1.2.1",
     "gulp-eslint": "^3.0.1",
     "gulp-file": "^0.3.0",
+    "gulp-rename": "^1.2.2",
     "gulp-replace": "^0.5.4",
+    "js-yaml": "^3.6.1",
+    "markdown-it": "^7.0.0",
     "prompt": "^1.0.0",
     "pug": "^2.0.0-beta4",
     "require-dir": "^0.3.0",
