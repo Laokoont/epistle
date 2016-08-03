@@ -63,7 +63,7 @@ var compilers = ( function () {
                 .pipe(gulp.dest("dist"));
 
     compObj.singleStoryTasks = (stub, story) => [
-        // TODO: implement styles rendering for PUG-enabled sory
+        // TODO: implement styles rendering for PUG-enabled story
         compileStoryTask(stub, story),
         copyStaticFilesTask(paths.statics.story(stub), stub)
     ];

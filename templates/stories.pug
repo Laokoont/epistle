@@ -4,6 +4,9 @@ block title
     title Все истории
 
 block content
-    each story, stub in stories
-        - var url = "stories/" + stub + "/index.html"
-        a.storylink(href=url title=story.title)= story.title
+    ul
+        each story, stub in stories
+            - var url = "stories/" + stub + "/index.html"
+            li.storyitem
+                a.storylink(href=url title=story.title)= story.title
+                p.excerpt= story.excerpt

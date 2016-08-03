@@ -65,6 +65,11 @@ var CLI = ( function () {
                         description: "  * Enter a title for your story",
                         required: true
                     },
+                    excerpt: {
+                        description: "  Enter the excerpt for your new story",
+                        required: false,
+                        "default": ""
+                    },
                     author: {
                         description: "  * Enter the ID of your author",
                         required: true,
