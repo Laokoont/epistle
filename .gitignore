@@ -44,3 +44,5 @@ bower_components
 .idea/
 epistle.iml
 .mailmap
+.DS_Store
+tmp/
