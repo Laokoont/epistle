@@ -85,3 +85,7 @@ gulp.task("render: stories", ["prep-stories"], function () {
 
     return es.merge(tasks);
 });
+
+gulp.task("render: posts", ["reg-posts"], function() {
+    console.log("labudai");
+});

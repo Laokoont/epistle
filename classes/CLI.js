@@ -28,6 +28,10 @@ var CLI = ( function () {
                         required: false,
                         "default": "flame"
                     },
+                    excerpt: {
+                        description: "  Enter an excerpt for your post",
+                        required: false
+                    },
                     tags: {
                         description: "  Enter tags separated by comma",
                         required: false,
