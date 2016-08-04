@@ -3,7 +3,8 @@
  */
 "use strict";
 
-var gulp = require("gulp"),
+var config = require("../classes/load-config"),
+    gulp = require("gulp"),
     es = require("event-stream"),
     data = require("gulp-data"),
     yml = require("js-yaml"),
@@ -26,7 +27,8 @@ var paths = {
         for (const key of Object.keys(obj)) {
             yield [key, obj[key]];
         }
-    };
+    },
+    excerpt = (text) => `${text.split(" ").slice(0, config.excerptLength).join(" ")}...`;
 
 gulp.task("reg-stories", function () {
     var currentStoryStub = "";
@@ -49,6 +51,9 @@ gulp.task("reg-posts", function () {
         } ))
         .pipe(data( (got) => {
             collections.posts[currentPostStub] = yml.load(String(got.contents));
+            if (!collections.posts[currentPostStub].excerpt) {
+                collections.postsp[currentPostStub].excerpt = excerpt(String(got.contents));
+            }
         }));
 });
 
@@ -63,6 +68,9 @@ gulp.task("prep-stories", ["reg-stories"], function () {
         } ))
         .pipe(data( (got) => {
             collections.stories[currentStoryStub].markup = md.render(String(got.contents));
+            if (!collections.stories[currentStoryStub].excerpt) {
+                collections.stories[currentStoryStub].excerpt = excerpt(String(got.contents));
+            }
         } ));
 });
 

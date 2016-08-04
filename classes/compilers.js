@@ -32,6 +32,13 @@ var compilers = ( function () {
             }
         },
 
+        copyStaticFilesTask = (dir, stub) =>
+            gulp.src(dir)
+                .pipe(grename( (path) => {
+                    console.log(path.basename);
+                } ))
+                .pipe(gulp.dest(paths.dist.story(stub))),
+
         compileStoryTask = (stub, story) => {
             var source = story.pug ? paths.templates.storyPug(stub) : paths.templates.story;
 
@@ -46,13 +53,6 @@ var compilers = ( function () {
                 .pipe(gulp.dest(paths.dist.story(stub)));
         },
 
-        copyStaticFilesTask = (dir, stub) =>
-            gulp.src(dir)
-                .pipe(grename( (path) => {
-                    console.log(path.basename);
-                } ))
-                .pipe(gulp.dest(paths.dist.story(stub))),
-
         generateStoriesArchive = (collection) =>
             gulp.src(paths.templates.storiesArchive)
                 .pipe(pug({
@@ -60,7 +60,15 @@ var compilers = ( function () {
                         stories: collection
                     }
                 }))
-                .pipe(gulp.dest("dist"));
+                .pipe(gulp.dest("dist")),
+
+        compilePostTask = () =>
+            gulp.src()
+                .pipe(gulp.dist()),
+
+        generatePostsArchive = () =>
+            gulp.src()
+                .pipe(gulp.dist());
 
     compObj.singleStoryTasks = (stub, story) => [
         // TODO: implement styles rendering for PUG-enabled story
