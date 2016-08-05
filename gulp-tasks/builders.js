@@ -52,7 +52,7 @@ gulp.task("reg-posts", function () {
         .pipe(data( (got) => {
             collections.posts[currentPostStub] = yml.load(String(got.contents));
             if (!collections.posts[currentPostStub].excerpt) {
-                collections.postsp[currentPostStub].excerpt = excerpt(String(got.contents));
+                collections.posts[currentPostStub].excerpt = excerpt(String(got.contents));
             }
         }));
 });
@@ -86,6 +86,6 @@ gulp.task("render: stories", ["prep-stories"], function () {
     return es.merge(tasks);
 });
 
-gulp.task("render: posts", ["reg-posts"], function() {
+gulp.task("render: posts", ["reg-posts"], function () {
     console.log("labudai");
 });
