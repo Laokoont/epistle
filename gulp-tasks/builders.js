@@ -3,16 +3,16 @@
  */
 "use strict";
 
-var config = require("../classes/load-config"),
+const config = require("../classes/load-config"),
     gulp = require("gulp"),
     es = require("event-stream"),
     data = require("gulp-data"),
     yml = require("js-yaml"),
     grename = require("gulp-rename"),
-    md = require("markdown-it"),
+    markdown = require("markdown-it"),
     compilers = require("../classes/compilers");
 
-var paths = {
+const paths = {
         stories: "src/stories/",
         posts: "src/blog/",
         author: "src/authors/",
@@ -58,16 +58,15 @@ gulp.task("reg-posts", function () {
 });
 
 gulp.task("prep-stories", ["reg-stories"], function () {
-    var currentStoryStub = "";
-
-    md = md();
+    var currentStoryStub = "",
+        parser = markdown();
 
     return gulp.src(`${paths.stories}/**/*.md`)
         .pipe(grename( (path) => {
             currentStoryStub = path.dirname;
         } ))
         .pipe(data( (got) => {
-            collections.stories[currentStoryStub].markup = md.render(String(got.contents));
+            collections.stories[currentStoryStub].markup = parser.render(String(got.contents));
             if (!collections.stories[currentStoryStub].excerpt) {
                 collections.stories[currentStoryStub].excerpt = excerpt(String(got.contents));
             }
@@ -76,7 +75,7 @@ gulp.task("prep-stories", ["reg-stories"], function () {
 
 // TODO: implement task for rendering sass
 gulp.task("render: stories", ["prep-stories"], function () {
-    var tasks = [];
+    const tasks = [];
 
     for (const [stub, story] of entries(collections.stories)) {
         tasks.concat(compilers.singleStoryTasks(stub, story));

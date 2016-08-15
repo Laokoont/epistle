@@ -8,16 +8,16 @@
 /* eslint object-curly-newline: ["error", { "minProperties": 1 }] */
 "use strict";
 
-var prompt = require("prompt");
+const prompt = require("prompt");
 
-var CLI = ( function () {
+const CLI = ( function () {
     var result = {};
 
     // UI is asking user to enter some data
     result.askFor = {
 
         postMeta: () => new Promise(function (resolve, reject) {
-            var schema = {
+            const schema = {
                 properties: {
                     title: {
                         description: "  * Enter a title to your blogpost",
@@ -63,7 +63,7 @@ var CLI = ( function () {
 
         // asking for meta information on new story
         storyMeta: () => new Promise(function (resolve, reject) {
-            var schema = {
+            const schema = {
                 properties: {
                     title: {
                         description: "  * Enter a title for your story",

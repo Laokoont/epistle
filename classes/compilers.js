@@ -5,11 +5,11 @@
 
 "use strict";
 
-var gulp = require("gulp"),
+const gulp = require("gulp"),
     pug = require("gulp-pug"),
     grename = require("gulp-rename");
 
-var compilers = ( function () {
+const compilers = ( function () {
     var compObj = {},
         paths = {
             statics: {
@@ -40,7 +40,7 @@ var compilers = ( function () {
                 .pipe(gulp.dest(paths.dist.story(stub))),
 
         compileStoryTask = (stub, story) => {
-            var source = story.pug ? paths.templates.storyPug(stub) : paths.templates.story;
+            const source = story.pug ? paths.templates.storyPug(stub) : paths.templates.story;
 
             return gulp.src(source)
                 .pipe(pug({
