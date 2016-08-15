@@ -3,14 +3,14 @@
  */
 "use strict";
 
-const config = require("../classes/load-config"),
-    gulp = require("gulp"),
+const gulp = require("gulp"),
     es = require("event-stream"),
     data = require("gulp-data"),
     yml = require("js-yaml"),
     grename = require("gulp-rename"),
     markdown = require("markdown-it"),
-    compilers = require("../classes/compilers");
+    compilers = require("../classes/compilers"),
+    utils = require("../classes/utils");
 
 const paths = {
         stories: "src/stories/",
@@ -22,13 +22,7 @@ const paths = {
     collections = {
         stories: {},
         posts: {}
-    },
-    entries = function *(obj) {
-        for (const key of Object.keys(obj)) {
-            yield [key, obj[key]];
-        }
-    },
-    excerpt = (text) => `${text.split(" ").slice(0, config.excerptLength).join(" ")}...`;
+    };
 
 gulp.task("reg-stories", function () {
     var currentStoryStub = "";
@@ -52,7 +46,7 @@ gulp.task("reg-posts", function () {
         .pipe(data( (got) => {
             collections.posts[currentPostStub] = yml.load(String(got.contents));
             if (!collections.posts[currentPostStub].excerpt) {
-                collections.posts[currentPostStub].excerpt = excerpt(String(got.contents));
+                collections.posts[currentPostStub].excerpt = utils.excerpt(String(got.contents));
             }
         }));
 });
@@ -68,16 +62,17 @@ gulp.task("prep-stories", ["reg-stories"], function () {
         .pipe(data( (got) => {
             collections.stories[currentStoryStub].markup = parser.render(String(got.contents));
             if (!collections.stories[currentStoryStub].excerpt) {
-                collections.stories[currentStoryStub].excerpt = excerpt(String(got.contents));
+                collections.stories[currentStoryStub].excerpt = utils.excerpt(String(got.contents));
             }
         } ));
 });
 
 // TODO: implement task for rendering sass
 gulp.task("render: stories", ["prep-stories"], function () {
-    const tasks = [];
+    const tasks = [],
+        calendar = utils.getCalendarSorting(collections.stories);
 
-    for (const [stub, story] of entries(collections.stories)) {
+    for (const [stub, story] of utils.entries(collections.stories)) {
         tasks.concat(compilers.singleStoryTasks(stub, story));
     }
     tasks.concat(compilers.storiesTasks(collections.stories));
