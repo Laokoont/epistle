@@ -3,6 +3,8 @@
  */
 "use strict";
 
+// TODO: integrate persistance local database to store meta data (github.com/louischatriot/nedb looks promising)
+
 const config = require("./load-config");
 
 const utils = (function () {
