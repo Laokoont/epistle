@@ -8,21 +8,26 @@ const gulp = require("gulp"),
     data = require("gulp-data"),
     yml = require("js-yaml"),
     grename = require("gulp-rename"),
+    newer = require("gulp-newer"),
     markdown = require("markdown-it"),
     compilers = require("../classes/compilers"),
-    utils = require("../classes/utils");
+    utils = require("../classes/utils"),
+    DB = require("../classes/database"),
+    config = require("../classes/load-config");
 
 const paths = {
         stories: "src/stories/",
         posts: "src/blog/",
         author: "src/authors/",
         templates: { story: "templates/story.pug" },
-        dist: { story: (name) => `dist/stories/${name}/` }
+        dist: { story: (name) => `dist/stories/${name}/` },
+        timestamp: (name) => `${config.timestampsPath}/${name}.ts`
     },
     collections = {
         stories: {},
         posts: {}
-    };
+    },
+    database = new DB(["posts", "stories"]);
 
 gulp.task("reg-stories", function () {
     var currentStoryStub = "";
@@ -37,18 +42,32 @@ gulp.task("reg-stories", function () {
 });
 
 gulp.task("reg-posts", function () {
-    var currentPostStub = "";
+    // var currentPostStub = "";
+    //
+    // return gulp.src(`${paths.posts}**/*.yml`)
+    //     .pipe(grename( (path) => {
+    //         currentPostStub = path.dirname;
+    //     } ))
+    //     .pipe(data( (got) => {
+    //         collections.posts[currentPostStub] = yml.load(String(got.contents));
+    //         if (!collections.posts[currentPostStub].excerpt) {
+    //             collections.posts[currentPostStub].excerpt = utils.excerpt(String(got.contents));
+    //         }
+    //     }));
 
-    return gulp.src(`${paths.posts}**/*.yml`)
-        .pipe(grename( (path) => {
-            currentPostStub = path.dirname;
-        } ))
-        .pipe(data( (got) => {
-            collections.posts[currentPostStub] = yml.load(String(got.contents));
-            if (!collections.posts[currentPostStub].excerpt) {
-                collections.posts[currentPostStub].excerpt = utils.excerpt(String(got.contents));
+    database.posts.load()
+        .then( database.check )
+        .then( (collection) => {
+            return gulp.src(`${paths.posts}**/*.yml`)
+                .pipe(newer(paths.timestamp(collection.name)))
+                .pipe(data((got) => {
+                    const post = yml.load(String(got.contents));
+
+                    collection.update(post, post, { upsert: true });
+                }));
             }
-        }));
+        )
+        .catch( (err) => console.log(err) );
 });
 
 gulp.task("prep-stories", ["reg-stories"], function () {
@@ -81,5 +100,9 @@ gulp.task("render: stories", ["prep-stories"], function () {
 });
 
 gulp.task("render: posts", ["reg-posts"], function () {
-    console.log("labudai");
+    const foo = database.posts.find({})
+        .then( (collection) => {
+            console.log(collection.collect);
+        } );
+
 });

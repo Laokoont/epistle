@@ -1,7 +1,9 @@
 /**
  * Created by nachasic on 03.08.2016.
  */
-/* eslint object-curly-newline: ["error", { "minProperties": 1 }] */
+/* eslint object-curly-newline: ["error", { "minProperties": 1 }]
+    no-unused-vars: 0
+ */
 
 "use strict";
 
@@ -10,7 +12,7 @@ const gulp = require("gulp"),
     grename = require("gulp-rename");
 
 const compilers = ( function () {
-    var compObj = {},
+    const compObj = {},
         paths = {
             statics: {
                 story: (stub) => [

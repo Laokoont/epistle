@@ -15,7 +15,9 @@ var cfg = ( function () {
             name: "Mah fukked up blogh",
             description: "Prescription for mah fukked up blogh",
             author: "Sick bastard",
-            excerptLength: 50
+            excerptLength: 50,
+            dataBasePath: "db",
+            timestampsPath: "db/timestamps"
         },
 
         entries = function *(obj) {
