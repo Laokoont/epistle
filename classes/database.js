@@ -137,8 +137,9 @@ class DBCollection {
         return this;
     }
 
+    // A timestamp file that is used to determine newly-changed posts or stories
     updateTimeStamp () {
-        fs.writeFileSync(`./${config.timestampsPath}/${this.name}.txt`, new Date(), "UTF-8");
+        fs.writeFileSync(`./${config.timestampsPath}/${this.name}.txt`, new Date(), config.encoding);
     }
 }
 

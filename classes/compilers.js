@@ -36,9 +36,6 @@ const compilers = ( function () {
 
         copyStaticFilesTask = (dir, stub) =>
             gulp.src(dir)
-                .pipe(grename( (path) => {
-                    console.log(path.basename);
-                } ))
                 .pipe(gulp.dest(paths.dist.story(stub))),
 
         compileStoryTask = (stub, story) => {

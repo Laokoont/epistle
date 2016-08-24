@@ -1,6 +1,8 @@
 /**
- * Created by alojkin on 02.08.2016.
+ * Created by nachasic on 02.08.2016.
  */
+/* eslint no-sync: 0 */
+
 "use strict";
 
 const gulp = require("gulp"),
@@ -13,7 +15,8 @@ const gulp = require("gulp"),
     compilers = require("../classes/compilers"),
     utils = require("../classes/utils"),
     DB = require("../classes/database"),
-    config = require("../classes/load-config");
+    config = require("../classes/load-config"),
+    fs = require("fs");
 
 const paths = {
         stories: "src/stories/",
@@ -42,37 +45,41 @@ gulp.task("reg-stories", function () {
 });
 
 gulp.task("reg-posts", function () {
-    // var currentPostStub = "";
-    //
-    // return gulp.src(`${paths.posts}**/*.yml`)
-    //     .pipe(grename( (path) => {
-    //         currentPostStub = path.dirname;
-    //     } ))
-    //     .pipe(data( (got) => {
-    //         collections.posts[currentPostStub] = yml.load(String(got.contents));
-    //         if (!collections.posts[currentPostStub].excerpt) {
-    //             collections.posts[currentPostStub].excerpt = utils.excerpt(String(got.contents));
-    //         }
-    //     }));
+    let currentPostPath = null;
+    const parser = markdown();
 
     database.posts.load()
         .then( database.check )
-        .then( (collection) => {
-            return gulp.src(`${paths.posts}**/*.yml`)
+        .then( (collection) =>
+            gulp.src(`${paths.posts}**/*.yml`)
                 .pipe(newer(paths.timestamp(collection.name)))
+                .pipe(grename( (path) => {
+                    currentPostPath = `${paths.posts}/${path.dirname}`;
+                    console.log(currentPostPath);
+                } ))
                 .pipe(data((got) => {
-                    const post = yml.load(String(got.contents));
+                    const post = yml.load(String(got.contents)),
+                        // TODO: Move markdown parsing to a separate extensible class
+                        content = parser.render( fs.readFileSync(`${currentPostPath}/post.md`, config.encoding) ),
+                        excerpt = utils.excerpt( utils.stripTags(content) );
 
-                    collection.update(post, post, { upsert: true });
-                }));
-            }
+                    Object.assign(post, {
+                        excerpt,
+                        content
+                    });
+
+                    collection.update({
+                        title: post.title,
+                        date: post.date
+                    }, post, { upsert: true });
+                }))
         )
         .catch( (err) => console.log(err) );
 });
 
 gulp.task("prep-stories", ["reg-stories"], function () {
-    var currentStoryStub = "",
-        parser = markdown();
+    let currentStoryStub = "";
+    const parser = markdown();
 
     return gulp.src(`${paths.stories}/**/*.md`)
         .pipe(grename( (path) => {
@@ -100,7 +107,7 @@ gulp.task("render: stories", ["prep-stories"], function () {
 });
 
 gulp.task("render: posts", ["reg-posts"], function () {
-    const foo = database.posts.find({})
+    database.posts.find({})
         .then( (collection) => {
             console.log(collection.collect);
         } );

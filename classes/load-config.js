@@ -17,7 +17,8 @@ var cfg = ( function () {
             author: "Sick bastard",
             excerptLength: 50,
             dataBasePath: "db",
-            timestampsPath: "db/timestamps"
+            timestampsPath: "db/timestamps",
+            encoding: "UTF-8"
         },
 
         entries = function *(obj) {

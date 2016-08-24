@@ -62,6 +62,8 @@ const utils = (function () {
         return years;
     };
 
+    Utils.stripTags = (text) => text.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ");
+
     Utils.excerpt = (text) => `${text.split(" ").slice(0, config.excerptLength).join(" ")}...`;
 
     return Utils;
